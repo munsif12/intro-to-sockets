@@ -1,0 +1,11 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .hello-world{
+       @apply text-center text-[#235432] text-[23px] font-bold font-sans 
+    }
+}
