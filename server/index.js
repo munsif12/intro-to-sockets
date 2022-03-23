@@ -3,6 +3,7 @@ const http = require("http");
 const CORS = require("cors");
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
+// const { request } = require("https");
 
 const app = express();
 app.use(CORS())
@@ -11,16 +12,30 @@ app.use(index);
 
 //socket.io Implemtnation
 const server = http.createServer(app);
+const request = require("request");
 const io = require('socket.io')(server, {
     cors: {
         origin: '*',
     }
 });
-
+const apiUrl = 'https://dummyjson.com/users';
 let interval;
+let realTimeChatInterval;
 io.on("connection", (socket) => {
     console.log("New client connected");
-    console.log('socket_id', socket.id);
+
+    socket.on('getChartValuesXY', function (data) {
+        console.log(`${apiUrl}/${data?.id}`);
+        if (realTimeChatInterval) {
+            clearInterval(realTimeChatInterval);
+        }
+        realTimeChatInterval = setInterval(() => {
+            socket.emit('result', { X: Math.floor(Math.random() * 9), Y: Math.floor(Math.random() * 9) })
+        }, 3000);
+    });
+    socket.on('stopLiveData', () => {
+        clearInterval(realTimeChatInterval);
+    })
     if (interval) {
         clearInterval(interval);
     }
@@ -28,6 +43,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("Client disconnected");
         clearInterval(interval);
+        clearInterval(realTimeChatInterval);
     });
 });
 
