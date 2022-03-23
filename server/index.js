@@ -8,6 +8,8 @@ const app = express();
 app.use(CORS())
 app.use(index);
 
+
+//socket.io Implemtnation
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
     cors: {
@@ -31,8 +33,7 @@ io.on("connection", (socket) => {
 
 const getApiAndEmit = socket => {
     const response = new Date();
-    // Emitting a new message. Will be consumed by the client
-    socket.emit("FromAPI", response);
+    socket.emit("getCurrentTime", response); // Emitting a new message. Will be consumed by the client
 };
 
 server.listen(port, () => console.log(`Server :: istening on port ${port}`));
