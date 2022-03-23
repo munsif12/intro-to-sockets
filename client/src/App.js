@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Layout from './layout'
 import TimeStamp from "./pages/TimeStamp";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LiveChart from "./pages/LiveChart";
 function App() {
 
   // console.log(selectedDays.map(val => obj[val]?.weight));    -----------> What will be the output of this code! <-------------
@@ -15,12 +16,16 @@ function App() {
             <TimeStamp />
           </Layout >}
           />
-          <Route exact path='/test' element={<Layout >
-            <div className="Test bg-white w-full">
-              {[...Array(100).keys()].map(val => (<p>{`test - val ${val}`}</p>))}</div>
+          <Route exact path='/livechart' element={<Layout >
+            <LiveChart />
           </Layout >}
           />
-
+          <Route exact path='*' element={<Layout >
+            <div className="notFound h-[100%] flex justify-center items-center">
+              <h1 className="text-white text-[7rem]">404 Not Found :( </h1>
+            </div>
+          </Layout >}
+          />
         </Routes>
       </BrowserRouter>
 

@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import { FaBeer } from 'react-icons/fa';
+import { BiTimer } from 'react-icons/bi';
+import { AiOutlineLineChart } from "react-icons/ai";
 
 const sidebarNavItems = [
     {
-        display: 'TimeStamp',
+        display: 'Time Stamp',
         to: '/',
+        icon: <BiTimer />,
         section: ''
     },
     {
-        display: 'Test',
-        to: '/test',
-        section: 'test'
+        display: 'Live Chart',
+        to: '/livechart',
+        icon: <AiOutlineLineChart />,
+        section: 'livechart'
     },
 ]
 
@@ -31,7 +34,8 @@ function Sidebar() {
                 sidebarNavItems.map((item, index) => (
                     <Link to={item.to} key={index}>
                         <div className={`sidebar__menu__item ${activeIndex === index ? 'active' : ''}`}>
-                            <div className="sidebar__menu__item__text">
+                            <div className="sidebar__menu__item__text flex justify-start items-center gap-1">
+                                <span className='text-2xl'>{item.icon}</span>
                                 {item.display}
                             </div>
                         </div>

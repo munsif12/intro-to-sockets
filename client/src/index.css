@@ -32,7 +32,7 @@
     @apply list-none cursor-pointer
 }
 .navLinks ul li::after{
-        content: '';
+    content: '';
     width: 0px;
     height: 2px;
     display: block;
@@ -66,5 +66,11 @@ font-family:'Titillium Web', sans-serif;
  .sidebar__menu__item.active {
 	 color: #000;
      font-weight: 700;
+}
+
+/* Live Charrt */
+.btnLiveDataStop{
+    border:1px solid white;
+    border-radius:5px;
 }
 }
