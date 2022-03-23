@@ -1,0 +1,70 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .hello-tailwind{
+       @apply  text-[#235432] text-2xl font-bold  
+    }
+    .messages >li{
+        @apply px-4 py-2
+    }
+    .messages >li:nth-child(odd){
+        @apply bg-[#efefef]
+    }
+    .mainSection::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+.mainSection::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+/* Navbar */
+.navbar{
+    -webkit-box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.25);
+    z-index: 4;
+}
+.navLinks ul li{
+    @apply list-none cursor-pointer
+}
+.navLinks ul li::after{
+        content: '';
+    width: 0px;
+    height: 2px;
+    display: block;
+    background: #000;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+
+/* sidebar */
+.App{
+font-family:'Titillium Web', sans-serif;
+}
+ .sidebar__logo {
+	 display: grid;
+	 place-items: center;
+	 height: 120px;
+	 font-size: 1.5rem;
+	 font-weight: 700;
+	 font-family: 'Mochiy Pop P one', sans-serif;
+}
+ .sidebar__menu__item {
+	 
+	 padding: 0.2rem 2rem;
+	 font-size: 1.1rem;
+	 font-weight: 500;
+	 color: #555;
+	 transition: color 0.3s ease-in-out;
+}
+    
+ .sidebar__menu__item.active {
+	 color: #000;
+     font-weight: 700;
+}
+}
