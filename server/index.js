@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
             clearInterval(realTimeChatInterval);
         }
         realTimeChatInterval = setInterval(() => {
-            socket.emit('result', { X: Math.floor(Math.random() * 9), Y: Math.floor(Math.random() * 9) })
+            socket.emit('result', { X: Math.floor(Math.random() * 100), Y: Math.floor(Math.random() * 100) })
         }, 3000);
     });
     socket.on('stopLiveData', () => {
