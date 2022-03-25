@@ -5,7 +5,7 @@ import socketIOClient from "socket.io-client";
 /* funtions */
 const ENDPOINT = process.env.ENDPOINT || "http://localhost:4001/";
 const content = (
-    <p className="hello-tailwind m-0 p-0">Generating timestamp on the backend </p>
+    <p className="hello-tailwind m-0 p-0">Generating timestamp on the backend using socket.io </p>
 );
 const title = (
     <h1 className="bold text-2xl p-0 m-0">Socket IO</h1>
