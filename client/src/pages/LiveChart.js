@@ -11,7 +11,7 @@ function LiveChart() {
     const [XY, setXY] = useState({ X: [49], Y: [63] });
 
     //chart options and series
-    const RealTIme = {
+    const RealTImeSeriesAndOptions = {
         series: [{
             name: "Live Chart",
             data: XY.X
@@ -105,8 +105,8 @@ function LiveChart() {
     return (
         <div className='LiveChart bg-white text-slate-50 h-full  flex justify-center items-center flex-col' >
             <Chart
-                options={RealTIme.options}
-                series={RealTIme.series}
+                options={RealTImeSeriesAndOptions.options}
+                series={RealTImeSeriesAndOptions.series}
                 type="area"
                 width='800'
             />

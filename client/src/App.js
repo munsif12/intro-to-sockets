@@ -3,6 +3,7 @@ import Layout from './layout'
 import TimeStamp from "./pages/TimeStamp";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LiveChart from "./pages/LiveChart";
+import RealtimeChat from "./pages/RealtimeChat";
 function App() {
 
   // console.log(selectedDays.map(val => obj[val]?.weight));    -----------> What will be the output of this code! <-------------
@@ -20,11 +21,16 @@ function App() {
             <LiveChart />
           </Layout >}
           />
+          <Route exact path='/realtime-chat' element={<Layout >
+            <RealtimeChat />
+          </Layout >}
+          />
           <Route exact path='*' element={<Layout >
             <div className="notFound h-[100%] flex justify-center items-center">
               <h1 className="text-white text-[7rem]">404 Not Found :( </h1>
             </div>
-          </Layout >}
+          </Layout >
+          }
           />
         </Routes>
       </BrowserRouter>

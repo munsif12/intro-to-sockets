@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BiTimer } from 'react-icons/bi';
+
 import { AiOutlineLineChart } from "react-icons/ai";
+import { SiLivechat } from "react-icons/si";
 
 const sidebarNavItems = [
     {
@@ -15,6 +17,12 @@ const sidebarNavItems = [
         to: '/livechart',
         icon: <AiOutlineLineChart />,
         section: 'livechart'
+    },
+    {
+        display: 'Live Chat',
+        to: '/realtime-chat',
+        icon: <SiLivechat />,
+        section: 'realtime-chat'
     },
 ]
 
