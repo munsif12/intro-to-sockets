@@ -19,7 +19,7 @@ const sidebarNavItems = [
         section: 'livechart'
     },
     {
-        display: 'Live Chat',
+        display: 'Realtme Chat',
         to: '/realtime-chat',
         icon: <SiLivechat />,
         section: 'realtime-chat'

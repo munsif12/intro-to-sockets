@@ -26,7 +26,7 @@ function RealtimeChat() {
                 </div>
                 <div className="chatFooterParent absolute bottom-[-7.5%] left-0 w-full h-[15%] px-2 flex justify-center ">
                     <div className="chat-footer flex justify-evenly w-[80%] bg-[#be2c6a] h-full rounded-lg ">
-                        <input type='text' className="chat-textarea outline-none w-2/3 px-3 text-black placeholder-white bg-transparent" placeholder="Type a message..." />
+                        <input type='text' className="chat-textarea outline-none w-2/3 px-3 text-white placeholder-white bg-transparent" placeholder="Type a message..." />
                         <div className="chat-footer-buttons w-[20%] flex justify-center items-center">
                             <button className="chat-send-button w-full h-[75%] bg-[#fa63a382] border-0 rounded-lg shadow-[rgb(174 174 174 / 10%) 0px 20px 25px -5px, rgb(253 253 253 / 1%) 0px 10px 10px -5px]">
                                 <p className='m-0 p-0' onClick={sendChat}>Send Chat</p>
