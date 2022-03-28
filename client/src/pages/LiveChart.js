@@ -13,13 +13,17 @@ function LiveChart() {
     //chart options and series
     const RealTImeSeriesAndOptions = {
         series: [{
-            name: "Live Chart",
-            data: XY.X
-        }],
+            name: "Live Chart X",
+            data: XY.X,
+        },
+        /* {
+            name: "Live Chart Y",
+            data: XY.Y,
+        } */],
         options: {
             chart: {
                 animations: {
-                    enabled: true,
+                    enabled: false,
                     easing: 'linear',
                     dynamicAnimation: {
                         speed: 1000
@@ -60,12 +64,7 @@ function LiveChart() {
                 color: 'white'
             },
             xaxis: {
-                title: {
-                    text: 'Random'
-                },
-                style: {
-                    color: 'white'
-                }
+                categories: XY.X
             },
 
             title: {
@@ -80,7 +79,11 @@ function LiveChart() {
                 size: 0
             },
             tooltip: {
-                show: false
+                show: true,
+                style: {
+                    fontSize: '18px',
+                    color: 'Black'
+                }
             },
             legend: {
                 show: true
@@ -97,7 +100,11 @@ function LiveChart() {
         socket.emit('getChartValuesXY', { id: 2 });
         // to get the data after the event is triggered
         socket.on('result', data => {
-            setXY({ X: [...XY.X, data.X], Y: [...XY.Y, data.Y] })
+            if (XY.X.length >= 10) {
+                setXY({ X: [...XY.X.shift(), data.X], Y: [...XY.Y.shift(), data.Y] })
+            }
+            else
+                setXY({ X: [...XY.X, data.X], Y: [...XY.Y, data.Y] })
         })
 
     }, [XY, socket]);
