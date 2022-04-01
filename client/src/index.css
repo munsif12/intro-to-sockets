@@ -18,6 +18,10 @@
     width: 0;  /* Remove scrollbar space */
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
+.chat-body::-webkit-scrollbar{
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 /* Optional: show position indicator in red */
 .mainSection::-webkit-scrollbar-thumb {
     background: #FF0000;
