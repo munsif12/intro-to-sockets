@@ -24,6 +24,7 @@ let realTimeChatInterval;
 io.on("connection", (socket) => {
     console.log("New client connected");
 
+    //live chart 
     socket.on('getChartValuesXY', function (data) {
         console.log(`${apiUrl}/${data?.id}`);
         if (realTimeChatInterval) {
@@ -33,9 +34,21 @@ io.on("connection", (socket) => {
             socket.emit('result', { X: Math.floor(Math.random() * 100), Y: Math.floor(Math.random() * 100) })
         }, 2000);
     });
+
     socket.on('stopLiveData', () => {
         clearInterval(realTimeChatInterval);
     })
+
+    //real time chat
+    socket.on('UserName', function (data) {
+        io.emit('welcomeNewMember', { notificationType: 'newMember', message: `${data} has joined the chat` });
+
+    });
+    socket.on('sendNewMessage', (data) => {
+        io.emit('recieveNewMessage', { notificationType: 'message', message: data });
+    })
+
+    //
     if (interval) {
         clearInterval(interval);
     }
