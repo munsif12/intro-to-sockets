@@ -4,6 +4,7 @@ import TimeStamp from "./pages/TimeStamp";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LiveChart from "./pages/LiveChart";
 import RealtimeChat from "./pages/RealtimeChat";
+import RealtimeChatLogin from "./pages/RealtimeChatLogin";
 function App() {
 
   // console.log(selectedDays.map(val => obj[val]?.weight));    -----------> What will be the output of this code! <-------------
@@ -13,7 +14,7 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route exact path='/' element={<Layout >
+          <Route exact path='/' onLeave={() => alert('u sure')} element={<Layout >
             <TimeStamp />
           </Layout >}
           />
@@ -23,6 +24,10 @@ function App() {
           />
           <Route exact path='/realtime-chat' element={<Layout >
             <RealtimeChat />
+          </Layout >}
+          />
+          <Route exact path='/login' element={<Layout >
+            <RealtimeChatLogin />
           </Layout >}
           />
           <Route exact path='*' element={<Layout >

@@ -1,53 +1,64 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Button } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom'
+import queryString from 'query-string'
 import Socket from 'socket.io-client'
 const ENDPOINT = process.env.ENDPOINT || "http://localhost:4001/";
+//import useHistory from 'react-router-dom/es/useHistory';
+
 
 const Notification = Object.freeze({
     newMember: 'newMember',
     message: 'message'
 })
-function RealtimeChat() {
-    const socket = Socket(ENDPOINT);
 
-    const [visible, setVisible] = useState(true)
+function RealtimeChat() {
+    let socket = Socket(ENDPOINT);
+    const navigate = useNavigate()
+    const location = useLocation();
+
+
     const [userMessage, setUserMessage] = useState('')
     const [notification, setNotification] = useState('')
-    const [userName, setUserName] = useState('');
+    const [userDetailsState, setUserDetailsState] = useState({
+        userName: '',
+        roomName: ''
+    })
     const [chatMessages, setChatMessages] = useState([]);
 
     useEffect(() => {
-        if (notification) {
-        } setTimeout(() => {
-            setNotification('');
-        }, 3000);
-    }, [notification]);
+        let { userName, roomName } = queryString.parse(location.search);
+        if (!userName && !roomName) {
+            navigate('/login')
+        } else {
+            console.log({ firstName: userName, roomName })
+            setUserDetailsState({
+                userName,
+                roomName
+            })
+
+
+            socket.emit('UserName', { userName, roomName });
+            socket.on('welcomeNewMember', (data) => {
+                console.log(data)
+                if (data.notificationType === Notification.newMember) {
+                    setNotification(data.message)
+                }
+            })
+        }
+
+    }, [location.search, navigate]);
+
+
+
     function sendChat() {
         socket.emit('sendNewMessage', userMessage);
         socket.on('recieveNewMessage', (data) => {
             setChatMessages([...chatMessages, data.message])
         })
     }
-    function showModal() {
-        setVisible(true)
-    };
 
-    const handleOk = (e) => {
-        e.preventDefault();
-        socket.emit('UserName', userName);
-        socket.on('welcomeNewMember', (data) => {
-            console.log(data)
-            if (data.notificationType === Notification.newMember) {
-                setNotification(data.message)
-            }
-        })
-        setVisible(false)
-        setUserName('')
-    };
 
-    const handleCancel = () => {
-        setVisible(false)
-    };
+
 
 
     return (
@@ -56,7 +67,7 @@ function RealtimeChat() {
                 <div className="chat-container relative xs:w-[80%] sm:w-[70%] md:w-[55%] lg:w-[55%] h-2/3 bg-gray-100 rounded-lg">
                     <div className="chat-header absolute top-[-25px] left-0">
                         <div className="chat-header-title ">
-                            <h1 className='text-white cursor-pointer' onClick={showModal}>Realtime Chat</h1>
+                            <h1 className='text-white cursor-pointer'>Realtime Chat</h1>
                         </div>
                     </div>
                     <div className="chat-body pt-1 relative text-black h-full overflow-y-scroll">
@@ -97,35 +108,6 @@ function RealtimeChat() {
             </div>
 
 
-            <Modal
-                visible={visible}
-                title="Enter Your Name"
-                onOk={handleOk}
-                onCancel={handleCancel}
-                footer={[
-                    <Button key="back" className='rounded-md' onClick={handleCancel}>
-                        Cancel
-                    </Button>,
-                    <Button key="submit" type="primary" onClick={handleOk} className='text-white bg-[#fa63a382] border-0 rounded-md shadow-[rgb(174 174 174 / 90%) 0px 20px 25px -5px, rgb(253 253 253 / 90%) 0px 10px 10px -5px]'>
-                        Submit
-                    </Button>
-                ]}
-                style={{
-                    width: '40%',
-                    height: '40%',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)'
-                }}
-            >
-                <form className=''>
-                    {/* create an input */}
-                    <div className="userName flex flex-col">
-                        <label className='text-[#BE2C6A] font-bold'>What's your name ?</label>
-                        <input className='h-[3rem] mt-2 outline-none rounded-lg border-2 border-[#BE2C6A] text-[#BE2C6A] pl-4 placeholder-[#BE2C6A]' type="text" name='userName' placeholder="Name" value={userName} onChange={(e) => setUserName(e.target.value)} />
-                    </div>
-                </form>
-            </Modal>
 
         </>
     )
