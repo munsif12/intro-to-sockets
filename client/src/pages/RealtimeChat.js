@@ -11,8 +11,8 @@ const Notification = Object.freeze({
     message: 'message'
 })
 
+const socket = Socket(ENDPOINT);
 function RealtimeChat() {
-    let socket = Socket(ENDPOINT);
     const navigate = useNavigate()
     const location = useLocation();
 

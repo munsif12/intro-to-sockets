@@ -18,12 +18,14 @@ const sidebarNavItems = [
         icon: <AiOutlineLineChart />,
         section: 'livechart'
     },
-    {
-        display: 'Realtme Chat',
-        to: '/realtime-chat',
-        icon: <SiLivechat />,
-        section: 'realtime-chat'
-    },
+    // realtime chat  odule moved to seprate repo
+
+    // {
+    //     display: 'Realtme Chat',
+    //     to: '/realtime-chat',
+    //     icon: <SiLivechat />,
+    //     section: 'realtime-chat'
+    // },
 ]
 
 function Sidebar() {
@@ -42,8 +44,8 @@ function Sidebar() {
                 sidebarNavItems.map((item, index) => (
                     <Link to={item.to} key={index}>
                         <div className={`sidebar__menu__item ${activeIndex === index ? 'active' : ''}`}>
-                            <div className="sidebar__menu__item__text flex justify-start items-center gap-1">
-                                <span className='text-2xl'>{item.icon}</span>
+                            <div className="sidebar__menu__item__text flex justify-start items-center gap-1 text-sm md:text-lg">
+                                <span className='hidden  md:block '>{item.icon}</span>
                                 {item.display}
                             </div>
                         </div>
