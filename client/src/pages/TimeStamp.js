@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Popover } from 'antd';
-import socketIOClient from "socket.io-client";
-
-/* funtions */
-const ENDPOINT = process.env.ENDPOINT || "http://localhost:4001/";
 const content = (
     <p className="hello-tailwind m-0 p-0">Generating timestamp on the backend using socket.io </p>
 );
 const title = (
     <h1 className="bold text-2xl p-0 m-0">Socket IO</h1>
 );
-function TimeStamp() {
+// const socket = socketIOClient(ENDPOINT);
+function TimeStamp({ socket }) {
     const [response, setResponse] = useState("");
     useEffect(() => {
-        const socket = socketIOClient(ENDPOINT);
         socket.on("getCurrentTime", data => {
             setResponse(data);
         });
-    }, []);
+    }, [socket]);
 
     return (
         <div className="TimeStamp h-[100%] flex justify-center items-center">

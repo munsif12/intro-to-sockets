@@ -5,6 +5,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LiveChart from "./pages/LiveChart";
 import RealtimeChat from "./pages/RealtimeChat";
 import RealtimeChatLogin from "./pages/RealtimeChatLogin";
+
+import Socket from 'socket.io-client'
+const ENDPOINT = process.env.ENDPOINT || "http://localhost:4001/";
+const socket = Socket(ENDPOINT);
 function App() {
 
   // console.log(selectedDays.map(val => obj[val]?.weight));    -----------> What will be the output of this code! <-------------
@@ -15,11 +19,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path='/' onLeave={() => alert('u sure')} element={<Layout >
-            <TimeStamp />
+            <TimeStamp socket={socket} />
           </Layout >}
           />
           <Route exact path='/livechart' element={<Layout >
-            <LiveChart />
+            <LiveChart socket={socket} />
           </Layout >}
           />
           <Route exact path='/realtime-chat' element={<Layout >
