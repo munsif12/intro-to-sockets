@@ -3,22 +3,21 @@ const http = require("http");
 const CORS = require("cors");
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
-// const { request } = require("https");
+const path = require("path");
 
 const app = express();
 app.use(CORS())
 app.use(index);
 
 
-//socket.io Implemtnation
+// -------------- socket.io Implemtnation ------------------- //
 const server = http.createServer(app);
-const request = require("request");
 const io = require('socket.io')(server, {
     cors: {
         origin: '*',
     }
 });
-const apiUrl = 'https://dummyjson.com/users';
+
 let interval;
 let realTimeChatInterval;
 io.on("connection", (socket) => {
@@ -26,7 +25,6 @@ io.on("connection", (socket) => {
 
     //live chart 
     socket.on('getChartValuesXY', function (data) {
-        console.log(`${apiUrl}/${data?.id}`);
         if (realTimeChatInterval) {
             clearInterval(realTimeChatInterval);
         }
@@ -40,13 +38,13 @@ io.on("connection", (socket) => {
     })
 
     //real time chat
-    socket.on('UserName', function (data) {
-        io.emit('welcomeNewMember', { notificationType: 'newMember', message: `${data} has joined the chat` });
+    // socket.on('UserName', function (data) {
+    //     io.emit('welcomeNewMember', { notificationType: 'newMember', message: `${data.userName} has joined the chat` });
 
-    });
-    socket.on('sendNewMessage', (data) => {
-        io.emit('recieveNewMessage', { notificationType: 'message', message: data });
-    })
+    // });
+    // socket.on('sendNewMessage', (data) => {
+    //     io.emit('recieveNewMessage', { notificationType: 'message', message: data });
+    // })
 
     //
     if (interval) {
@@ -62,7 +60,19 @@ io.on("connection", (socket) => {
 
 const getApiAndEmit = socket => {
     const response = new Date();
-    socket.emit("getCurrentTime", response); // Emitting a new message. Will be consumed by the client
+    // Emitting a new message. Will be consumed by the client
+    socket.emit("getCurrentTime", response);
 };
+
+// ------------ DEPLOYMENT ------------- //
+__dirname = path.resolve();
+if (process.env.NODE_ENV === "production") {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, "client/build")));
+    // Handle React routing, return all requests to React app
+    app.get("*", function (req, res) {
+        res.sendFile(path.join(__dirname, "client/build", "index.html"));
+    });
+}
 
 server.listen(port, () => console.log(`Server :: istening on port ${port}`));
